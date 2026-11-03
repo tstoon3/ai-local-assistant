@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local AI Assistant — Development Roadmap</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2d;--panel2:#17223a;--text:#edf2ff;--muted:#aab6d0;--line:#2a3856;--accent:#8bb8ff;--green:#78d6b0;--amber:#f3c879}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#0b1020,#101a2d 55%,#0b1020);color:var(--text);font:16px/1.65 "Segoe UI",Tahoma,Arial,sans-serif}
+.wrap{max-width:1040px;margin:auto;padding:42px 22px 70px}.hero{padding:34px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(120deg,#182746,#121a2d)}
+.kicker{color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+h1{font-size:clamp(30px,5vw,48px);line-height:1.15;margin:12px 0}h2{font-size:23px;margin:0 0 14px}h3{font-size:18px;margin:0 0 8px}
+p{margin:8px 0;color:var(--muted)}.hero p{max-width:760px;font-size:17px}
+.meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}.pill{border:1px solid #405579;background:#1a2b49;color:#dce8ff;border-radius:99px;padding:6px 12px;font-size:13px}
+section{margin-top:28px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.spec{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--line)}.spec:last-child{border:0}.spec b{font-weight:600}.spec span{color:var(--muted);text-align:right}
+.phase{position:relative;padding:20px 20px 20px 74px;margin:13px 0;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+.num{position:absolute;left:20px;top:20px;width:36px;height:36px;border-radius:12px;background:#20385f;color:#cfe0ff;display:grid;place-items:center;font-weight:800}
+.phase ul{margin:10px 0 0;padding-left:20px;color:var(--muted)}li{margin:4px 0}.deliver{margin-top:12px;padding:10px 12px;border-left:3px solid var(--green);background:#142a2a;border-radius:0 9px 9px 0;color:#d7f5e9;font-size:14px}
+.tag{font-size:12px;color:var(--amber);font-weight:700;margin-left:7px}
+.arch{display:grid;gap:9px;text-align:center}.layer{padding:13px;border:1px solid #405579;border-radius:12px;background:var(--panel2)}.arrow{color:var(--accent);font-size:20px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.small{font-size:14px}
+.callout{border:1px solid #6c5a32;background:#292416;padding:16px;border-radius:14px;color:#f8e7bd}
+footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:700px){.grid,.cols{grid-template-columns:1fr}.hero{padding:24px}.phase{padding-left:64px}.spec{display:block}.spec span{display:block;text-align:left}}
+@media print{body{background:white;color:#172033}.hero,.panel,.phase,.layer{background:white;color:#172033;border-color:#ccd3df;break-inside:avoid}.hero p,p,.spec span,.phase ul,footer{color:#46536a}.pill{background:#f0f4fa;color:#24344f;border-color:#ccd3df}.deliver{background:#eff8f4;color:#174a38}.callout{background:#fff8e8;color:#59451a}.wrap{max-width:none;padding:15px}.phase{break-inside:avoid} }
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+<div class="kicker">Project blueprint · Windows 11 · Local-first</div>
+<h1>Local AI Assistant</h1>
+<p>Roadmap สำหรับสร้างต้นแบบบน Acer Swift Go SFG14-41-R2QM ก่อน แล้วจึงย้ายหรือปรับประสิทธิภาพบนเครื่องหลัก โดยคงแนวคิดออฟไลน์เป็นค่าเริ่มต้นและไม่ผูกระบบกับฮาร์ดแวร์เครื่องใดเครื่องหนึ่ง</p>
+<div class="meta"><span class="pill">ต้นแบบ: Acer Swift Go</span><span class="pill">Desktop: Tauri + Vue 3</span><span class="pill">Backend: Python + FastAPI</span><span class="pill">Local LLM</span><span class="pill">ภาษาไทยเป็นหลัก</span></div>
+</header>
+
+<section class="grid">
+<div class="panel"><h2>เป้าหมายผลิตภัณฑ์</h2>
+<ul><li>คุยได้ 3 รูปแบบ: Push-to-Talk, Hands-Free, Wake Word</li><li>ทำงานในเครื่องเป็นค่าเริ่มต้น ไม่เรียก Cloud ระหว่างสนทนา</li><li>มีความจำระยะยาวที่ผู้ใช้ตรวจสอบ แก้ไข และลบได้</li><li>คำสั่งที่มีผลต่อไฟล์หรือระบบต้องขออนุมัติก่อน</li><li>เตรียมโมดูลออนไลน์ไว้ แต่ปิดและไม่เชื่อมต่อในช่วงต้นแบบ</li></ul></div>
+<div class="panel"><h2>ฮาร์ดแวร์และข้อควรระวัง</h2>
+<div class="spec"><b>เครื่องต้นแบบ</b><span>Acer Swift Go SFG14-41-R2QM</span></div>
+<div class="spec"><b>เครื่องเป้าหมายภายหลัง</b><span>Ryzen 5 5600X · RAM 32GB · RTX 5060 Ti 8GB</span></div>
+<div class="spec"><b>แนวทาง</b><span>ตรวจสเปกจริงของ Swift Go ก่อนเลือกโมเดล</span></div>
+<p class="small">ประสิทธิภาพ LLM และการเร่งด้วย GPU ของเครื่องต้นแบบขึ้นกับ CPU, RAM, GPU และระบบระบายความร้อนของรุ่นย่อยจริง จึงยังไม่กำหนดขนาดโมเดลตายตัว</p></div>
+</section>
+
+<section class="panel">
+<h2>สถาปัตยกรรมเป้าหมาย</h2>
+<div class="arch">
+<div class="layer"><b>Desktop UI — Tauri + Vue 3 + TypeScript</b><br><span class="small">Chat · Dashboard · Voice · Memory · Models · Settings</span></div>
+<div class="arrow">↕ Local communication</div>
+<div class="layer"><b>Assistant Backend — Python + FastAPI</b><br><span class="small">Conversation Manager · Voice State Machine · Permissions · Logging</span></div>
+<div class="arrow">↙ &nbsp; ↓ &nbsp; ↘</div>
+<div class="cols">
+<div class="layer"><b>LLM Engine</b><br><span class="small">Ollama / local model</span></div>
+<div class="layer"><b>Voice Engine</b><br><span class="small">STT · TTS · VAD · Wake Word</span></div>
+<div class="layer"><b>Local Data</b><br><span class="small">SQLite · History · Memory</span></div>
+</div>
+<div class="layer"><b>External Integration — ปิดไว้</b><br><span class="small">Cloud API · Web Search · Sync · External Services</span></div>
+</div>
+</section>
+
+<section>
+<h2>Roadmap การพัฒนา</h2>
+<div class="phase"><div class="num">0</div><h3>สำรวจเครื่องและกำหนด baseline <span class="tag">เริ่มต้น</span></h3>
+<ul><li>ตรวจ CPU, RAM, GPU, พื้นที่ว่าง, Windows และไดรเวอร์</li><li>ตรวจ Python, Node.js, Git, Ollama และโมเดล Qwen ที่มีอยู่</li><li>บันทึกเวอร์ชันและผลทดสอบก่อนเปลี่ยนแปลงระบบ</li></ul>
+<div class="deliver">ผลลัพธ์: รายงานสภาพแวดล้อมและรายการสิ่งที่ต้องติดตั้ง โดยยังไม่ลบของเดิม</div></div>
+
+<div class="phase"><div class="num">1</div><h3>วางโครงโปรเจกต์และรันแอปเปล่า</h3>
+<ul><li>สร้าง repository และโครงสร้าง apps / services / docs</li><li>สร้าง Tauri + Vue 3 + TypeScript พร้อมหน้า Chat และ Dashboard เปล่า</li><li>สร้าง FastAPI health endpoint และระบบ log</li><li>ให้ Desktop ติดต่อ Backend ผ่านช่องทาง Local ที่กำหนด</li></ul>
+<div class="deliver">ผลลัพธ์: เปิด Desktop App ได้และตรวจสถานะ Backend ได้</div></div>
+
+<div class="phase"><div class="num">2</div><h3>เชื่อม LLM ภายในเครื่อง</h3>
+<ul><li>ตรวจโมเดลเดิมและเลือกโมเดลที่เหมาะกับทรัพยากรเครื่องต้นแบบ</li><li>เชื่อมผ่าน Local API และแสดง token streaming ถ้ารองรับ</li><li>เพิ่มการเลือกโมเดล การหยุดสร้างคำตอบ และการจัดการข้อผิดพลาด</li><li>ทดสอบโดยตัดอินเทอร์เน็ตหลังเตรียมไฟล์ครบ</li></ul>
+<div class="deliver">ผลลัพธ์: แชตข้อความกับโมเดล Local ได้โดยไม่ใช้ Cloud</div></div>
+
+<div class="phase"><div class="num">3</div><h3>ประวัติสนทนาและข้อมูล Local</h3>
+<ul><li>ออกแบบ SQLite schema สำหรับ conversations และ messages</li><li>เพิ่มค้นหา เปลี่ยนชื่อ ลบ และเริ่มบทสนทนาใหม่</li><li>กำหนดตำแหน่งเก็บข้อมูลและวิธีสำรอง/ส่งออก</li></ul>
+<div class="deliver">ผลลัพธ์: ประวัติสนทนาคงอยู่หลังปิดและเปิดแอปใหม่</div></div>
+
+<div class="phase"><div class="num">4</div><h3>Voice: Push-to-Talk</h3>
+<ul><li>เลือกอุปกรณ์ไมโครโฟนและทดสอบการรับเสียง</li><li>เพิ่ม STT และประเมินความแม่นยำภาษาไทย</li><li>เลือก TTS ที่ออกเสียงภาษาไทยได้เหมาะสม</li><li>เพิ่มปุ่มกดพูด หยุดฟัง เล่นซ้ำ และสถานะการประมวลผล</li></ul>
+<div class="deliver">ผลลัพธ์: กดพูด → ถอดข้อความ → AI ตอบ → อ่านคำตอบเป็นเสียง</div></div>
+
+<div class="phase"><div class="num">5</div><h3>Voice: Hands-Free Conversation</h3>
+<ul><li>เพิ่ม VAD เพื่อตรวจจับช่วงเริ่มพูดและหยุดพูด</li><li>ปรับ endpointing และช่วงรอหลังผู้ใช้พูดจบ</li><li>ป้องกันเสียง TTS ย้อนเข้าไมโครโฟน</li><li>รองรับการพูดแทรกและยกเลิกคำตอบเดิม</li></ul>
+<div class="deliver">ผลลัพธ์: สนทนาต่อเนื่องได้โดยไม่ต้องกดปุ่มทุกครั้ง</div></div>
+
+<div class="phase"><div class="num">6</div><h3>Voice: Wake Word</h3>
+<ul><li>เลือกตัวตรวจจับคำปลุกที่ทำงานในเครื่อง</li><li>ทดสอบคำปลุกในสภาพแวดล้อมจริงและลด false activation</li><li>เพิ่มสถานะ standby, listening และปุ่มปิดไมโครโฟน</li><li>กำหนดให้ Wake Word ส่งต่อเข้าสู่โหมดสนทนาที่ผู้ใช้เลือก</li></ul>
+<div class="deliver">ผลลัพธ์: เรียกผู้ช่วยด้วยคำปลุกได้ โดยควบคุมการฟังได้ชัดเจน</div></div>
+
+<div class="phase"><div class="num">7</div><h3>Long-term Memory และ Privacy</h3>
+<ul><li>แยกประวัติสนทนาออกจากความจำระยะยาว</li><li>ให้ผู้ใช้เลือกบันทึก ตรวจสอบ แก้ไข และลบความจำ</li><li>กำหนดการลบข้อมูลต้นทางและข้อมูลที่เกี่ยวข้อง</li><li>ไม่บันทึกเสียงดิบเป็นค่าเริ่มต้น</li></ul>
+<div class="deliver">ผลลัพธ์: AI เรียกใช้ความจำที่ผู้ใช้อนุญาตได้ และผู้ใช้ควบคุมข้อมูลได้</div></div>
+
+<div class="phase"><div class="num">8</div><h3>Permission Manager และ Extensions</h3>
+<ul><li>กำหนดสิทธิ์เครื่องมือแบบ allowlist</li><li>แสดงรายละเอียดการกระทำและขออนุมัติก่อนทำสิ่งสำคัญ</li><li>แยกเครื่องมือเป็นโมดูล พร้อมบันทึก audit log</li><li>ยังไม่เปิดให้ LLM รัน PowerShell หรือคำสั่งระบบอย่างอิสระ</li></ul>
+<div class="deliver">ผลลัพธ์: เพิ่มเครื่องมือได้โดยมีขอบเขตและจุดอนุมัติชัดเจน</div></div>
+
+<div class="phase"><div class="num">9</div><h3>ทดสอบ Offline และย้ายไปเครื่องหลัก</h3>
+<ul><li>ทดสอบตัดอินเทอร์เน็ตและตรวจการเชื่อมต่อออก</li><li>ทดสอบการทำงานต่อเนื่อง การใช้ RAM/VRAM และความร้อน</li><li>ย้ายข้อมูลที่จำเป็นและติดตั้งโมเดลที่เหมาะกับ RTX 5060 Ti</li><li>เตรียมแพ็กเกจ Desktop และวิธี backup/restore</li><li>คง External Integration เป็น Disabled จนกว่าจะอนุมัติเปิดใช้</li></ul>
+<div class="deliver">ผลลัพธ์: ต้นแบบพร้อมย้ายเครื่องและมีเกณฑ์ตรวจรับก่อนใช้งานจริง</div></div>
+</section>
+
+<section class="grid">
+<div class="panel"><h2>หลักการออกแบบ UI</h2>
+<ul><li><b>Chat เป็นหน้าแรก:</b> เน้นพื้นที่สนทนาและประวัติ</li><li><b>Dashboard แยก:</b> สถานะโมเดล เสียง GPU/RAM และ log</li><li><b>Voice Studio:</b> อุปกรณ์เสียง โหมด และการทดสอบ</li><li><b>Memory:</b> รายการความจำพร้อมแก้ไข/ลบ</li><li><b>Settings:</b> Privacy, Startup, Storage และ Diagnostics</li></ul></div>
+<div class="panel"><h2>เกณฑ์ความปลอดภัย</h2>
+<ul><li>Backend เป็นผู้ตรวจสิทธิ์ ไม่เชื่อ UI อย่างเดียว</li><li>ผูกบริการ Local กับ loopback และป้องกันการเข้าถึงจากเครือข่ายอื่น</li><li>ปิด Cloud/Telemetry/Sync ที่ไม่จำเป็น</li><li>มีปุ่มหยุดฟังและตัวบ่งชี้ไมค์ชัดเจน</li><li>ขออนุมัติก่อนแก้ไข/ลบไฟล์หรือเปลี่ยนค่าระบบ</li></ul></div>
+</section>
+
+<section class="callout">
+<b>ข้อควรจำก่อนเริ่ม:</b> ชื่อรุ่น Acer Swift Go SFG14-41-R2QM ยังไม่เพียงพอที่จะฟันธงประสิทธิภาพ AI ต้องตรวจ CPU, RAM และ GPU ของเครื่องจริงก่อนเลือกโมเดล โดยต้นแบบควรพิสูจน์สถาปัตยกรรมและ workflow ก่อน ไม่จำเป็นต้องเร่งให้โมเดลใหญ่หรือเสียงทุกส่วนทำงานบน GPU พร้อมกันตั้งแต่วันแรก
+</section>
+
+<section class="panel">
+<h2>โครงสร้างโฟลเดอร์หลัก</h2>
+<pre style="white-space:pre-wrap;color:#cbd8f2;font:13px/1.65 Consolas,monospace">LocalAI/
+├── apps/desktop/          # Tauri + Vue UI
+├── services/backend/      # FastAPI backend
+│   └── app/
+│       ├── api/
+│       ├── conversation/
+│       ├── llm/
+│       ├── voice/{stt,tts,vad,wakeword}/
+│       ├── memory/
+│       ├── permissions/
+│       ├── tools/
+│       └── integrations/  # disabled initially
+├── docs/
+├── scripts/
+├── tests/
+├── .env.example
+├── .gitignore
+└── README.md
+
+ข้อมูล runtime แยกไว้นอก repository:
+%LOCALAPPDATA%\\LocalAI\\
+├── config/
+├── data/assistant.db
+├── logs/
+├── cache/
+└── exports/</pre>
+</section>
+
+<footer>
+เอกสารวางแผนฉบับเริ่มต้น · ไม่ใช่คู่มือติดตั้ง · ลำดับและเทคโนโลยีสามารถปรับได้หลังตรวจสเปกเครื่อง Acer และทดสอบไลบรารีจริง
+</footer>
+</main>
+</body>
+</html>
