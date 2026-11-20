@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#102B62"/>
+    <stop offset=".52" stop-color="#07152F"/>
+    <stop offset="1" stop-color="#101044"/>
+  </linearGradient>
+  <linearGradient id="e" x1=".1" y1="0" x2=".9" y2="1">
+    <stop offset="0" stop-color="#F4FBFF"/>
+    <stop offset=".38" stop-color="#65E7FF"/>
+    <stop offset=".72" stop-color="#258BFF"/>
+    <stop offset="1" stop-color="#A18BFF"/>
+  </linearGradient>
+  <linearGradient id="orbit" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#9B8BFF"/>
+    <stop offset=".48" stop-color="#35DFFF"/>
+    <stop offset="1" stop-color="#167CFF"/>
+  </linearGradient>
+  <radialGradient id="glow">
+    <stop offset="0" stop-color="#258BFF" stop-opacity=".42"/>
+    <stop offset="1" stop-color="#258BFF" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="18"/>
+  </filter>
+  <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="5"/>
+  </filter>
+</defs>
+<rect x="28" y="28" width="968" height="968" rx="228" fill="url(#bg)"/>
+<rect x="31" y="31" width="962" height="962" rx="225" fill="none" stroke="#72CFFF" stroke-opacity=".35" stroke-width="7"/>
+<circle cx="512" cy="500" r="390" fill="url(#glow)"/>
+<!-- orbital halo -->
+<ellipse cx="512" cy="530" rx="392" ry="188" transform="rotate(-25 512 530)"
+ fill="none" stroke="#168BFF" stroke-opacity=".34" stroke-width="46" filter="url(#shadow)"/>
+<ellipse cx="512" cy="530" rx="392" ry="188" transform="rotate(-25 512 530)"
+ fill="none" stroke="url(#orbit)" stroke-width="25" stroke-linecap="round"/>
+<!-- abstract E monogram -->
+<path d="M650 278H430C331 278 270 344 270 444V580C270 680 331 746 430 746H650
+ C684 746 711 719 711 685C711 651 684 624 650 624H442
+ C405 624 385 605 385 570V551H594C628 551 655 524 655 490C655 456 628 429 594 429H385V454
+ C385 419 405 400 442 400H650C684 400 711 373 711 339C711 305 684 278 650 278Z"
+ fill="url(#e)" stroke="#DDF8FF" stroke-opacity=".8" stroke-width="8" stroke-linejoin="round"/>
+<!-- sparkle -->
+<path d="M778 188C793 251 811 269 874 284C811 299 793 317 778 380C763 317 745 299 682 284C745 269 763 251 778 188Z"
+ fill="#A9F4FF"/>
+<circle cx="778" cy="284" r="92" fill="#47DFFF" opacity=".18" filter="url(#soft)"/>
+<circle cx="210" cy="690" r="12" fill="#B8F6FF"/>
+<circle cx="827" cy="685" r="8" fill="#8F9CFF"/>
+</svg>

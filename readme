@@ -1,4 +1,5 @@
 ใช้งานเปิด 2 port
-1.ai
-2.ui
+1.ai Invoke-RestMethod http://localhost:11434/api/tags
+2.ui npm run tauri dev
 **ลองเปลี่ยนเป็น call to talk ดีมั้ยนะ
+Qwen2.5-7B-Instruct server main
